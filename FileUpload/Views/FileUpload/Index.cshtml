@@ -1,0 +1,37 @@
+﻿@model UploadFile
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4">
+                <label><b>Attachments</b></label>
+                <div class="form-group  d-flex">
+                    <input type="file" id="files" name="files" class="form-control" multiple required />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label><b>To</b></label>
+                <div class="form-group d-flex">
+                    <input type="email" id="ToEmail" name="ToEmail" class="form-control" required placeholder="Receiver email" />
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 23px;">
+                <div class="form-group">
+                    <button type="button" onclick="Upload()" class="btn btn-outline-success">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+<script src="~/js/FileUpload.js"></script>
+}
+
