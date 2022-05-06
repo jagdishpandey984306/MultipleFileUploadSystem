@@ -6,5 +6,6 @@ namespace FileUpload.Model
     {
         public byte[][] Attachments { get; set; }
         public string[] Extension { get; set; }
+        public string[] FileName { get; set; }
     }
 }

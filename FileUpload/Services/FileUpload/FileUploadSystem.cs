@@ -16,6 +16,7 @@ namespace FileUpload.Services.FileUpload
     {
         public byte[] fileByte { get; set; }
         public string Extension { get; set; }
+        public string fileName { get; set; }
     }
     public class FileUploadSystem : IFileUploadSystem
     {
@@ -26,7 +27,6 @@ namespace FileUpload.Services.FileUpload
             _dBConnection = dBConnection;
             _configuration = configuration;
         }
-
 
         public async Task<ResponseMessage> UploadFile(FileUploadDetails param)
         {
@@ -70,7 +70,8 @@ namespace FileUpload.Services.FileUpload
                         arrFiles.Add(new UploadFiles
                         {
                             fileByte = data.File,
-                            Extension = extension
+                            Extension = extension,
+                            fileName = fileName
                         });
                     }
 
@@ -79,6 +80,7 @@ namespace FileUpload.Services.FileUpload
                     {
                         Attachments = arrFiles.Select(p => p.fileByte).ToArray(),
                         Extension = arrFiles.Select(p => p.Extension).ToArray(),
+                        FileName = arrFiles.Select(p => p.fileName).ToArray(),
                         EmailId = emailId,
                         Password = emailPassword,
                         To = param.ToEmail
@@ -114,6 +116,25 @@ namespace FileUpload.Services.FileUpload
             {
                 throw await Task.Run(() => ex);
             }
+        }
+
+
+        public async Task<List<UploadFile>> List()
+        {
+            var list = await Task.Run(() => _dBConnection.UploadFile.ToList());
+            return list ?? new List<UploadFile>();
+        }
+
+        public async Task<ResponseMessage> Delete(int id)
+        {
+            var data = await Task.Run(() => _dBConnection.UploadFile.Where(d => d.Id == id).First());
+            _dBConnection.UploadFile.Remove(data);
+            _dBConnection.SaveChanges();
+            return new ResponseMessage()
+            {
+                Code = "Success",
+                Message = "Deleted Successfully"
+            };
         }
     }
 }

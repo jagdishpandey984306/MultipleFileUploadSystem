@@ -28,18 +28,52 @@ let Upload = () => {
                 $('#loading').addClass('hidden');
                 if (result.code == "Success") {
                     toastr.success(result.message, result.code);
+                    List();
+                    $('#files').val('');
+                    $('#ToEmail').val('');
                 }
                 else {
                     toastr.error(result.message, result.code);
                 }
-                $('#files').val('');
-                $('#ToEmail').val('');
             },
             error: function (xhr, status, error) {
                 toastr.error(status, "error");
             }
         });
     }
+};
+
+let List = () => {
+    $('#dataBind').html('');
+    $.ajax({
+        type: "Get",
+        url: "/FileUpload/List",
+        success: function (result) {
+            $('#dataBind').html(result);
+        },
+        error: function (xhr, status, error) {
+            toastr.error(status, "error");
+        }
+    });
+};
+
+let Delete = (id) => {
+    $.ajax({
+        type: "Get",
+        url: "/FileUpload/Delete?id=" + id,
+        success: function (result) {
+            if (result.code == "Success") {
+                toastr.success(result.message, result.code);
+                List();
+            }
+            else {
+                toastr.error(result.message, result.code);
+            }
+        },
+        error: function (xhr, status, error) {
+            toastr.error(status, "error");
+        }
+    });
 };
 
 function isEmail(email) {

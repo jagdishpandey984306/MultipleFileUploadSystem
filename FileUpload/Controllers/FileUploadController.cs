@@ -26,7 +26,19 @@ namespace FileUpload.Controllers
         public async Task<IActionResult> UploadFile(FileUploadDetails model)
         {
             var result = await fileUploadSystem.UploadFile(model);
-            return Json(new { Code = result.Code, Message = result.Message });
+            return Json(result);
+        }
+
+        public async Task<IActionResult> List()
+        {
+            var result = await fileUploadSystem.List();
+            return ViewComponent("List", result);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await fileUploadSystem.Delete(id);
+            return Json(result);
         }
     }
 }

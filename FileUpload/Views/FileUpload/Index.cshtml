@@ -30,6 +30,9 @@
         </div>
     </div>
 </form>
+<div id="dataBind">
+    @await Component.InvokeAsync("List")
+</div>
 
 @section scripts{
 <script src="~/js/FileUpload.js"></script>

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<UploadFile>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>File</th>
+            <th>Extension</th>
+            <th>Upload Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.Count() > 0)
+            {
+                foreach (var file in Model)
+                {
+                    var src = file.Extension == ".pdf" ? "PDF" : "data:image/jpeg;base64," + Convert.ToBase64String(file.File);
+                    <tr>
+                        <th>@file.Id</th>
+                        <td> <img src="@src" style="width:50px; height:50px"></td>
+                        <td>@file.Extension</td>
+                        <td>@file.UploadDate</td>
+                        <td>
+                            <a type="button" class="btn btn-danger" onclick="Delete(@file.Id)">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5"><center>------------------------------data not found------------------------------</center></td></tr>
+            }
+        }
+    </tbody>
+</table>

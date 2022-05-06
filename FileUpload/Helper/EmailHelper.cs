@@ -42,11 +42,11 @@ namespace FileUpload
                             case ".jpeg":
                             case ".jpg":
                             case ".png":
-                                Attachment attachment = new Attachment(new MemoryStream(sender.Attachments[i]), "lama.jpg");
+                                Attachment attachment = new Attachment(new MemoryStream(sender.Attachments[i]), sender.FileName[i]);
                                 message.Attachments.Add(attachment);
                                 break;
                             case ".pdf":
-                                attachment = new Attachment(new MemoryStream(sender.Attachments[i]), MediaTypeNames.Application.Octet);
+                                attachment = new Attachment(new MemoryStream(sender.Attachments[i]), sender.FileName[i]);
                                 message.Attachments.Add(attachment);
                                 break;
                             default:
