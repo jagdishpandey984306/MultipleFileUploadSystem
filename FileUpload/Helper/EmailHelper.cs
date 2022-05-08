@@ -52,7 +52,6 @@ namespace FileUpload
                             default:
                                 break;
                         }
-
                     }
                     smtp.Send(message);
                     return "Success";
