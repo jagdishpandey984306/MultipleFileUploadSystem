@@ -18,6 +18,7 @@ namespace FileUpload.Services.FileUpload
         public string Extension { get; set; }
         public string fileName { get; set; }
     }
+
     public class FileUploadSystem : IFileUploadSystem
     {
         private readonly DBConnection _dBConnection;
@@ -85,6 +86,7 @@ namespace FileUpload.Services.FileUpload
                         Password = emailPassword,
                         To = param.ToEmail
                     };
+
                     var result = EmailHelper.Sending(sender);
                     if (result == "Success")
                     {
