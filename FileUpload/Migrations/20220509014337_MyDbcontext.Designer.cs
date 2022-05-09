@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FileUpload.Migrations
 {
     [DbContext(typeof(DBConnection))]
-    [Migration("20220508083416_dbcontext")]
-    partial class dbcontext
+    [Migration("20220509014337_MyDbcontext")]
+    partial class MyDbcontext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

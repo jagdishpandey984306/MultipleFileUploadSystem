@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FileUpload.Migrations
 {
-    public partial class intial : Migration
+    public partial class MyDbcontext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

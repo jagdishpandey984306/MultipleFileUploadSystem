@@ -1,46 +1,69 @@
 ﻿
+$(function () {
+    $('#UploadFileForm').validate({
+        rules: {
+            files: {
+                required: true,
+                extension: "jpeg|jpg|png|pdf"
+            },
+            ToEmail: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            files: {
+                required: "*Please  upload valid file formats",
+                extension: "*Please  upload valid file formats"
+            },
+            ToEmail: {
+                required: "*Please enter a valid email address",
+                email: "*Please enter a valid email address"
+            }
+        }
+    });
+
+    $('#btnSave').on("click", function () {
+        if (!$("#UploadFileForm").valid()) {
+            $("#UploadFileForm").valid();
+        }
+        else {
+            Upload();
+        }
+    });
+});
 
 let Upload = () => {
     $('#loading').removeClass('hidden');
     var files = $("#files").get(0).files;
     var param = new FormData();
-    if (files.length == 0) {
-        $('#loading').addClass('hidden');
-        toastr.error("Please upload at least one file", "Alert");
+    for (var i = 0; i < files.length; i++) {
+        param.append("files", files[i]);
     }
-    else if (!isEmail($('#ToEmail').val())) {
-        $('#loading').addClass('hidden');
-        toastr.error("Invalid Email", "Alert");
-    }
-    else {
-        for (var i = 0; i < files.length; i++) {
-            param.append("files", files[i]);
-        }
-        param.append("ToEmail", $('#ToEmail').val());
-        $.ajax({
-            type: "POST",
-            url: "/FileUpload/UploadFile",
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            data: param,
-            success: function (result) {
-                $('#loading').addClass('hidden');
-                if (result.code == "Success") {
-                    toastr.success(result.message, result.code);
-                    List();
-                    $('#files').val('');
-                    $('#ToEmail').val('');
-                }
-                else {
-                    toastr.error(result.message, result.code);
-                }
-            },
-            error: function (xhr, status, error) {
-                toastr.error(status, "error");
+    param.append("ToEmail", $('#ToEmail').val());
+    $.ajax({
+        type: "POST",
+        url: "/FileUpload/UploadFile",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        data: param,
+        success: function (result) {
+            $('#loading').addClass('hidden');
+            if (result.code == "Success") {
+                toastr.success(result.message, result.code);
+                List();
+                $('#files').val('');
+                $('#ToEmail').val('');
             }
-        });
-    }
+            else {
+                toastr.error(result.message, result.code);
+            }
+        },
+        error: function (xhr, status, error) {
+            toastr.error(status, "error");
+        }
+    });
 };
 
 let List = () => {
